@@ -1,5 +1,6 @@
 id: hanto-dojo
 name: Hanto Dojo
+type: public
 award:
   emoji: 🐍
 modules:
