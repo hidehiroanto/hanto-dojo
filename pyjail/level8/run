@@ -13,7 +13,8 @@ if __name__ == '__main__':
     eval, print = eval, print
     modules.clear()
     __builtins__.__dict__.clear()
-    del getsize, randint, modules, __loader__, __builtins__
+    del getsize, randint, modules, __loader__
+    __builtins__ = None
 
     answer = eval(answer_string)
     print(f'The two numbers were {num_1} and {num_2}. The correct answer was {num_1 + num_2}.')
