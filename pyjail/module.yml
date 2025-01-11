@@ -1,13 +1,13 @@
 name: Python Jails
 challenges:
   - id: level1
-    name: Eval is Fun!
+    name: Evaluation is Fun!
   - id: level2
     name: Variables are Fun!
   - id: level3
-    name: Print is Fun!
+    name: Printing is Fun!
   - id: level4
-    name: Open is Fun!
+    name: Opening is Fun!
   - id: level5
     name: Globals Are Fun!
   - id: level6
