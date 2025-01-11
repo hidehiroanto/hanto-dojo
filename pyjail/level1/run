@@ -1,0 +1,15 @@
+#!/usr/bin/exec-suid -- /usr/bin/python3 -I
+
+import random
+
+if __name__ == '__main__':
+    num_1, num_2 = random.randint(1, 100), random.randint(1, 100)
+    print('I am thinking of two numbers: num_1 and num_2. What is their sum?')
+    answer = eval(input('Enter your answer here: '))
+    print(f'You answered: {answer}')
+    print(f'The two numbers were {num_1} and {num_2}. The correct answer was {num_1 + num_2}.')
+    if answer == num_1 + num_2:
+        with open('/flag') as f:
+            print(f'You win! The flag is: {f.read().strip()}')
+    else:
+        print('You lose! No flag for you!')

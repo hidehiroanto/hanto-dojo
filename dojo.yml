@@ -1,9 +1,7 @@
-id: example
-name: Example Dojo
-type: example
+id: hanto-dojo
+name: Hanto Dojo
+type: topic
 award:
-  emoji: 😀
-image: pwncollege/challenge-simple
+  emoji: 🐍
 modules:
-  - id: hello
-  - id: world
+  - id: pyjail

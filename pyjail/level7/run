@@ -1,0 +1,16 @@
+#!/usr/bin/exec-suid -- /usr/bin/python3 -I
+
+from os.path import getsize
+from random import randint
+
+for global_variable in list(globals().values()):
+    if hasattr(global_variable, 'open'):
+        delattr(global_variable, 'open')
+
+if __name__ == '__main__':
+    print(f'The flag is {getsize("/flag")} characters long.')
+    num_1, num_2 = randint(1, 100), randint(1, 100)
+    print('I am thinking of two numbers. What is their sum?')
+    answer = eval(input('Enter your answer here: '))
+    print(f'The two numbers were {num_1} and {num_2}. The correct answer was {num_1 + num_2}.')
+    print('You win!' if answer == num_1 + num_2 else 'You lose!')

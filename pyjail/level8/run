@@ -1,0 +1,20 @@
+#!/usr/bin/exec-suid -- /usr/bin/python3 -I
+
+from os.path import getsize
+from random import randint
+from sys import modules
+
+if __name__ == '__main__':
+    print(f'The flag is {getsize("/flag")} characters long.')
+    num_1, num_2 = randint(1, 100), randint(1, 100)
+    print('I am thinking of two numbers. What is their sum?')
+    answer_string = input('Enter your answer here: ')
+
+    eval, print = eval, print
+    modules.clear()
+    __builtins__.__dict__.clear()
+    del getsize, randint, modules, __loader__, __builtins__
+
+    answer = eval(answer_string)
+    print(f'The two numbers were {num_1} and {num_2}. The correct answer was {num_1 + num_2}.')
+    print('You win!' if answer == num_1 + num_2 else 'You lose!')
