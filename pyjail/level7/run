@@ -1,11 +1,11 @@
 #!/usr/bin/exec-suid -- /usr/bin/python3 -I
 
-from os.path import getsize
-from random import randint
-
 for global_variable in list(globals().values()):
     if hasattr(global_variable, 'open'):
         delattr(global_variable, 'open')
+
+from os.path import getsize
+from random import randint
 
 if __name__ == '__main__':
     print(f'The flag is {getsize("/flag")} characters long.')
