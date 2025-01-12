@@ -1,0 +1,1 @@
+A collection of challenges about server side template injection, using Flask servers and Jinja2 templates.
