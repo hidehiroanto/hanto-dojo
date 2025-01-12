@@ -3,16 +3,16 @@ challenges:
   - id: level1
     name: Out of Context
   - id: level2
-    name: I Dropped My Key
+    name: I Dropped My Keys
   - id: level3
     name: I Dropped My Cookie
   - id: level4
     name: Crack the Cookie
   - id: level5
-    name: Long Expressions
+    name: Long Island Expressway
   - id: level6
     name: Flotation Devices Are Banned, Period
   - id: level7
-    name: Long Expressions with More Filters
+    name: Be There or Be Square
   - id: level8
     name: No More Templates?
