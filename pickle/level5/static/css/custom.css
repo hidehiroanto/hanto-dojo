@@ -1,0 +1,28 @@
+@font-face {
+    font-family: "Gakuran";
+    src: url("/static/fonts/gakuran_font.ttf");
+}
+@font-face {
+    font-family: "Kan Tan";
+    src: url("/static/fonts/wt034.ttf");
+}
+body {
+    background-color: #fdc355;
+    background-image: url("/static/images/background.png");
+}
+content * {
+    display: block;
+    max-width: 75%;
+    height: auto;
+    margin: 1em auto;
+    text-align: center;
+    font-family: "Kan Tan", "Gakuran";
+    border-radius: 1em;
+    overflow-wrap: break-word;
+}
+h1 {
+    font-size: 4em;
+}
+p {
+    font-size: 2em;
+}

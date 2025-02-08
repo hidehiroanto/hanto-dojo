@@ -1,0 +1,5 @@
+#!/usr/bin/exec-suid -- /usr/bin/bash -p
+
+PATH=/usr/bin
+
+echo -e '127.0.0.1\tbikini.bottom' >> /etc/hosts

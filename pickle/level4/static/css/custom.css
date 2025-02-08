@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "Spongeboy Me Bob";
+    src: url("/static/fonts/spongeboy_me_bob.ttf");
+}
+body {
+    background-color: #26b9c8;
+}
+content * {
+    display: block;
+    max-width: 75%;
+    height: auto;
+    margin: 1em auto;
+    text-align: center;
+    font-family: "Spongeboy Me Bob";
+    color: #fff56c;
+    border-radius: 1em;
+    overflow-wrap: break-word;
+}
+h1 {
+    font-size: 4em;
+}
+p, label, input, span {
+    font-size: 2em;
+}
+input {
+    background-color: #0457a0;
+    width: 6em;
+}
+input[type="text"] {
+    width: 16em;
+}
+span {
+    position: absolute;
+    visibility: hidden;
+    display: inline-block;
+    min-width: 16em;
+}

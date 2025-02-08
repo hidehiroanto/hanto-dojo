@@ -1,0 +1,12 @@
+name: Pickle
+challenges:
+  - id: level1
+    name: Pickle Rick
+  - id: level2
+    name: Angry Pickle
+  - id: level3
+    name: Scapyckle
+  - id: level4
+    name: Shrine of the Holy Bucket
+  - id: level5
+    name: Sage of Six Paths

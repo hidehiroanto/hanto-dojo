@@ -4,5 +4,7 @@ type: public
 award:
   emoji: 🐍
 modules:
+  - id: lectures
   - id: pyjail
   - id: ssti
+  - id: pickle

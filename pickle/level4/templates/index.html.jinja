@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chum Calculator</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+</head>
+<body>
+    <content>
+        <h1>Chum Calculator</h1>
+        <img src="/static/images/chum-bucket.png" alt="Chum Bucket">
+        <p>Flag length: {{ flag_length }}</p>
+        <form>
+            <label for="expression">Please enter your expression here:</label>
+            <input type="text" id="expression" name="expression"><span></span>
+            <input type="submit" value="Submit">
+        </form>
+        {%- if result is defined %}
+        <p>Expression: {{ expression }}</p>
+        <p>Result: {{ result }}</p>
+        {% endif %}
+        <footer>
+            <p>Copyright © 2025. All rights reserved.</p>
+            <p>Built with ❤️ and 🥒 by hanto and Karen Plankton.</p>
+        </footer>
+    </content>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+</body>
+</html>

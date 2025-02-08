@@ -4,6 +4,8 @@ challenges:
     name: Evaluating Is Fun!
   - id: level2
     name: Variables Are Fun!
+  - id: level2-a
+    name: Functions Are Fun!
   - id: level3
     name: Printing Is Fun!
   - id: level4
