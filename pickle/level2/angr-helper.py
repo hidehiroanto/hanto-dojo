@@ -15,7 +15,7 @@ def load_project() -> Project:
         if not os.path.isdir(PROJECT_DIRECTORY):
             os.mkdir(PROJECT_DIRECTORY)
         project_list = sorted(os.listdir(PROJECT_DIRECTORY))
-        print(f'List of projects:\n{"\n".join(project_list)}\n')
+        print('List of projects:\n' + '\n'.join(project_list) + '\n')
 
         project_name = input(f'Enter project name: ').strip()
         if project_name:
