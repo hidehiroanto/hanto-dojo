@@ -7,7 +7,7 @@ from sys import modules
 MAX_INT = 1 << 0x40
 
 if __name__ == '__main__':
-    print(f'The flag is {getsize('/flag')} characters long.')
+    print(f'The flag is {getsize("/flag")} characters long.')
     num_1, num_2 = randint(1, MAX_INT), randint(1, MAX_INT)
     print('I am thinking of two integers. What is their sum?')
     correct_answer = sum((num_1, num_2))
