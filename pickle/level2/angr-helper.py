@@ -87,10 +87,9 @@ if __name__ == '__main__':
         project = load_project()
         if project:
             find_condition, avoid_condition = get_conditions()
-            manager = project.factory.simulation_manager(project.factory.entry_state())
-            manager.explore(find=find_condition, avoid=avoid_condition)
-            if manager.found:
-                print(f'Password found: {manager.found[0].posix.dumps(0).decode()}')
+            simgr = project.factory.simgr(project.factory.entry_state()).explore(find=find_condition, avoid=avoid_condition)
+            if simgr.found:
+                print(f'Password found: {simgr.found[0].posix.dumps(0).decode()}')
             else:
                 print('Password not found. Try again with different parameters.')
                 store_project(project)
