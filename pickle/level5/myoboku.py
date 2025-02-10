@@ -25,7 +25,7 @@ def get_path(path):
         flask.abort(400, 'Only members of Root (根) are allowed to access the hidden paths of Mount Myōboku.')
     if 'sage' not in flask.request.headers.get('User-Agent'):
         flask.abort(403, 'You have not yet mastered Sage Mode.')
-    return flask.send_from_directory(os.path.join('.sage', 'paths'), f'{path}.do')
+    return flask.send_from_directory(os.path.join('.sage', 'paths'), path)
 
 app.secret_key = os.urandom(8)
 app.jinja_options['bytecode_cache'] = jinja2.FileSystemBytecodeCache(os.path.join(app.root_path, '.sage', 'cache'))

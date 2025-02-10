@@ -26,7 +26,7 @@ if __name__ == '__main__':
         option = input('Enter path number, or q to quit: ').strip()
         if option in paths:
             try:
-                load(six.moves.urllib.parse.urljoin(base_url, os.path.join('.sage', 'paths', paths[option])))
+                load(six.moves.urllib.parse.urljoin(base_url, os.path.join('.sage', 'paths', f'{paths[option]}.do')))
             except Exception as e:
                 print(f'Error: {e}')
             print('The wheel of saṃsāra turns again...')
