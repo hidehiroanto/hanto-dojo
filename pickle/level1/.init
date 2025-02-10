@@ -1,10 +1,8 @@
 #!/usr/bin/exec-suid -- /usr/bin/bash -p
 
-PATH=/usr/bin
+export PATH=/usr/bin
 
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
 chmod 4755 /challenge/*.py
-
-echo -e '127.0.0.1\tbikini.bottom' >> /etc/hosts
