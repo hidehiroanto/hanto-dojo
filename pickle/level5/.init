@@ -5,7 +5,6 @@ PATH=/usr/bin
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
-chmod 700 /challenge/.sage
 chmod 4755 /challenge/*.py
 chmod 4755 /challenge/*.sage
 

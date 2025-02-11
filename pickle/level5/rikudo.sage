@@ -29,9 +29,9 @@ if __name__ == '__main__':
                 load(six.moves.urllib.parse.urljoin(base_url, os.path.join('.sage', 'paths', f'{paths[option]}.do')))
             except Exception as e:
                 print(f'Error: {e}')
-            print('The wheel of saṃsāra turns again...')
         elif option.lower().startswith('q'):
             break
         else:
             print('Invalid option.')
+        print('The wheel of saṃsāra turns again...')
     print('You have achieved nirvana and escaped the cycle of saṃsāra.')
