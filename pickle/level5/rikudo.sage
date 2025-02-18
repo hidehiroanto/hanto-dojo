@@ -34,4 +34,4 @@ if __name__ == '__main__':
         else:
             print('Invalid option.')
         print('The wheel of saṃsāra turns again...')
-    print('You have achieved nirvana and escaped the cycle of saṃsāra.')
+    print('You have achieved nirvāṇa and escaped the cycle of saṃsāra.')

@@ -8,9 +8,9 @@ import psutil
 host, port = ('myoboku.zan', 80) if os.geteuid() == 0 else ('localhost', 1337)
 
 def peer_process_of(fd: int) -> psutil.Process:
-    server_conn = next(conn for conn in psutil.Process().net_connections() if conn.fd == fd)
-    client_conn = next(conn for conn in psutil.net_connections() if conn.raddr == server_conn.laddr and conn.laddr == server_conn.raddr)
-    return psutil.Process(client_conn.pid)
+    s_conn = next(conn for conn in psutil.Process().net_connections() if conn.fd == fd)
+    c_conn = next(conn for conn in psutil.net_connections() if (conn.raddr, conn.laddr) == (s_conn.laddr, s_conn.raddr))
+    return psutil.Process(c_conn.pid)
 
 app = flask.Flask(__name__)
 
