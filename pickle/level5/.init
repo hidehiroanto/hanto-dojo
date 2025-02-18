@@ -8,5 +8,4 @@ find /challenge -type f -exec chmod 644 {} \;
 chmod 4755 /challenge/*.py
 chmod 4755 /challenge/*.sage
 
-mkdir /challenge/.sage/cache
 echo -e '127.0.0.1\tmyoboku.zan' >> /etc/hosts

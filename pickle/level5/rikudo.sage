@@ -1,4 +1,4 @@
-#!/usr/bin/exec-suid --real -- /usr/bin/sage --nodotsage
+#!/usr/bin/exec-suid --real -- /usr/bin/env DOT_SAGE=/challenge/.sage /usr/bin/sage
 
 import six
 
