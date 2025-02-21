@@ -1,1 +1,1 @@
-A collection of challenges about the `pickle` module in Python.  
+A collection of challenges about the `pickle` module in Python.

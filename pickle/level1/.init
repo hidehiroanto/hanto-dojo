@@ -1,6 +1,6 @@
 #!/usr/bin/exec-suid -- /usr/bin/bash -p
 
-export PATH=/usr/bin
+PATH=/usr/bin
 
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;

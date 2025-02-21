@@ -1,1 +1,1 @@
-Can you watch this entire lecture before the challenge container closes?  
+Can you watch this entire lecture before the challenge container closes?

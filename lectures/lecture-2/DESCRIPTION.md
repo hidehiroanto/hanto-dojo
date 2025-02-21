@@ -1,1 +1,1 @@
-Can you watch this entire lecture before next week?  
+Can you watch this entire lecture before next week?

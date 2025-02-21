@@ -1,1 +1,1 @@
-Integers only.  
+Integers only.

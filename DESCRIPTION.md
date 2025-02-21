@@ -1,1 +1,1 @@
-A collection of challenges by hanto!  
+A collection of challenges by hanto!
