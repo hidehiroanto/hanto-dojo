@@ -3,5 +3,5 @@ challenges:
   - id: level1
     name: SenpAI
     image: hidehiroanto/challenge-llm
-    visibility:
-        start: "2026-01-01T00:00:00-00:00"
+visibility:
+    start: "2026-01-01T00:00:00-00:00"
