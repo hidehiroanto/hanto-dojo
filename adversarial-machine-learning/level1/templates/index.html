@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SenpAI</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+</head>
+<body>
+    <content>
+        <h1>SenpAI</h1>
+        <form>
+            <label for="user_message">Please enter your message here:</label>
+            <input type="text" id="user_message" name="user_message"><span></span>
+            <input type="submit" value="Submit">
+        </form>
+        {%- if user_message is defined %}
+        <p>Message: {{ user_message }}</p>
+        {% endif %}
+        {%- if response_message is defined %}
+        <p>Response: {{ response_message }}</p>
+        {% endif %}
+    </content>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+</body>
+</html>

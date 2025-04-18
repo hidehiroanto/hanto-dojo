@@ -8,3 +8,4 @@ modules:
   - id: pyjail
   - id: ssti
   - id: pickle
+  - id: adversarial-machine-learning
