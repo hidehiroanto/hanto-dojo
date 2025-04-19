@@ -8,17 +8,19 @@
 </head>
 <body>
     <content>
-        <h1>SenpAI</h1>
-        <form>
-            <label for="user_message">Please enter your message here:</label>
+        <div class="background branding">
+            <div style="opacity: 0.5;">senp</div><div>AI</div>
+        </div>
+        <form method="post">
+            <label for="user_message">Please enter your user message here:</label>
             <input type="text" id="user_message" name="user_message"><span></span>
             <input type="submit" value="Submit">
         </form>
         {%- if user_message is defined %}
-        <p>Message: {{ user_message }}</p>
+        <p>User Message: {{ user_message }}</p>
         {% endif %}
         {%- if response_message is defined %}
-        <p>Response: {{ response_message }}</p>
+        <p>SenpAI Assistant Response: {{ response_message }}</p>
         {% endif %}
     </content>
     <script type="text/javascript" src="/static/js/main.js"></script>
