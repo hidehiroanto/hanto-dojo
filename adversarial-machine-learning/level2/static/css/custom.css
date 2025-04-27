@@ -258,3 +258,36 @@ pre code {
     75% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+content * {
+    display: block;
+    max-width: 75%;
+    height: auto;
+    margin: 1em auto;
+    text-align: center;
+    border-radius: 1em;
+    overflow-wrap: break-word;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+p, label, input, span {
+    font-size: 2em;
+}
+
+input {
+    width: 6em;
+}
+
+input[type="text"] {
+    width: 16em;
+}
+
+span {
+    position: absolute;
+    visibility: hidden;
+    display: inline-block;
+    min-width: 16em;
+}
