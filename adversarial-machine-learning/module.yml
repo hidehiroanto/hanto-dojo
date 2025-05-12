@@ -1,7 +1,7 @@
 name: Adversarial Machine Learning
 challenges:
   - id: level1
-    name: kouhAI
+    name: kohAI
     image: hidehiroanto/challenge-llm-flask
   - id: level2
     name: senpAI
