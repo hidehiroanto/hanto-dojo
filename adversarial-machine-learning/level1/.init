@@ -1,0 +1,9 @@
+#!/bin/sh
+
+find /challenge -type d -exec chmod 00755 {} \;
+find /challenge -type f -exec chmod 644 {} \;
+
+export PYTHONDONTWRITEBYTECODE=1
+mkdir -p /var/log/gunicorn
+cd /challenge
+gunicorn -k eventlet -b 0.0.0.0:80 --access-logfile /var/log/gunicorn/access.log --log-file /var/log/gunicorn/error.log -D app:app

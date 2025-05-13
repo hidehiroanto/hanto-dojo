@@ -2,9 +2,9 @@ name: Adversarial Machine Learning
 challenges:
   - id: level1
     name: kohAI
-    image: hidehiroanto/challenge-llm-flask
+    image: hidehiroanto/challenge-llm
   - id: level2
     name: senpAI
-    image: hidehiroanto/challenge-llm-flask
+    image: hidehiroanto/challenge-llm
 visibility:
     start: "2026-01-01T00:00:00-00:00"
