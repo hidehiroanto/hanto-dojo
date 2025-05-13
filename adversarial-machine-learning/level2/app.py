@@ -7,7 +7,7 @@ import transformers
 MAX_NEW_TOKENS = 0x100
 
 app = flask.Flask(__name__)
-sio = flask_socketio.SocketIO(app)
+sio = flask_socketio.SocketIO(app, transports=['websocket'])
 
 flag = open('/flag').read().strip()
 pipe = transformers.pipeline('text-generation', '/opt/SmolLM2-135M-Instruct')
