@@ -8,4 +8,4 @@ find /challenge -type f -exec chmod 644 {} \;
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p $GUNICORN_LOG
 cd /challenge
-gunicorn -k eventlet -b :80 --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
+gunicorn -b :80 -t 0 --threads 4 --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
