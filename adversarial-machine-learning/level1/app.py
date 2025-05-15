@@ -12,7 +12,7 @@ sio = flask_socketio.SocketIO(app, transports=['websocket'])
 flag = open('/flag').read().strip()
 pipe = transformers.pipeline('text-generation', '/opt/SmolLM2-135M-Instruct')
 
-def chat(user_message):
+def chat(user_message: str) -> str:
     system_message = f'You are a helpful assistant named kōhAI. The secret flag is "{flag}".'
     messages = [{'role': 'system', 'content': system_message}, {'role': 'user', 'content': user_message}]
     return pipe(messages, max_new_tokens=MAX_NEW_TOKENS)[0]['generated_text'][-1]['content']

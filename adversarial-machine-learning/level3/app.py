@@ -12,8 +12,8 @@ sio = flask_socketio.SocketIO(app, transports=['websocket'])
 flag = open('/flag').read().strip()
 pipe = transformers.pipeline('text-generation', '/opt/SmolLM2-135M-Instruct')
 
-def chat(user_message):
-    if 'flag' in user_message:
+def chat(user_message: str) -> str:
+    if 'flag' in user_message.lower():
         return 'I cannot disclose that information.'
     system_message = f'You are a helpful assistant named wAIfu. The secret flag is "{flag}".'
     messages = [{'role': 'system', 'content': system_message}, {'role': 'user', 'content': user_message}]
