@@ -31,3 +31,6 @@ def api_chat():
 @sio.event
 def new_interaction(interaction):
     sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': chat(interaction['content']['message'])}})
+
+if __name__ == '__main__':
+    sio.run(app, port=80, debug=False)
