@@ -5,4 +5,4 @@ find /challenge -type f -exec chmod 644 {} \;
 
 cd /challenge
 chmod 744 app.py
-python -B app.py
+python -B app.py &
