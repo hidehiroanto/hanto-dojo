@@ -15,9 +15,12 @@ pipe = transformers.pipeline('text-generation', '/opt/SmolLM2-135M-Instruct')
 def chat(user_message):
     if 'flag' in user_message:
         return 'I cannot disclose that information.'
-    system_message = f'You are a helpful assistant named senpAI. The secret flag is "{flag}".'
+    system_message = f'You are a helpful assistant named wAIfu. The secret flag is "{flag}".'
     messages = [{'role': 'system', 'content': system_message}, {'role': 'user', 'content': user_message}]
-    return pipe(messages, max_new_tokens=MAX_NEW_TOKENS)[0]['generated_text'][-1]['content']
+    assistant_message = pipe(messages, max_new_tokens=MAX_NEW_TOKENS)[0]['generated_text'][-1]['content']
+    if flag in assistant_message:
+        return 'I cannot disclose that information.'
+    return assistant_message
 
 @app.route('/')
 @app.route('/index.html')
