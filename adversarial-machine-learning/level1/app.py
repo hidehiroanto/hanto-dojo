@@ -20,7 +20,7 @@ def chat(user_message: str) -> str:
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', assistant_name='kōhAI')
 
 @app.route('/api/chat', methods=['POST'])
 def api_chat():

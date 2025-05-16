@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>senpAI</title>
+    <title>{{ assistant_name }}</title>
     <style>
         @font-face {
             font-family: 'Montserrat';
@@ -37,8 +37,6 @@
         pre {
             padding: 1em;
             overflow: scroll;
-            /* white-space: pre-wrap; */
-            /* word-break: break-word; */
             font-family: Arial, sans-serif;
             background-color: #111;
         }
@@ -483,7 +481,7 @@
 </head>
 <body>
     <div class="background branding">
-        <div style="opacity: 0.5;">senp</div><div>AI</div>
+        <div style="opacity: 0.5">{{ assistant_name|replace('AI', '</div><div>AI</div><div style="opacity: 0.5">') }}</div>
     </div>
     <div class="card-container">
     </div>
