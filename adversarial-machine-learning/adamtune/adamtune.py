@@ -79,8 +79,8 @@ PROVIDE_VOICE_ID_ADAM = r'''
 
 BIG_SLEEP = 1.0
 SMALL_SLEEP = 0.05
-SPEAKER_THRESHOLD = 0.25
-TRANSCRIPTION_THRESHOLD = 0.66
+SPEAKER_THRESHOLD = 0.75
+TRANSCRIPTION_THRESHOLD = 0.75
 
 def check_for_yes(if_no):
 	if not input('> ').strip().lower().startswith('y'):
@@ -135,13 +135,13 @@ if __name__ == '__main__':
     while len(voiceprint_data) < voiceprint_size:
         voiceprint_data += sys.stdin.buffer.read(voiceprint_size - len(voiceprint_data))
 
-    with NamedTemporaryFile(suffix='.wav', delete_on_close=False) as voiceprint_file:
+    with NamedTemporaryFile(suffix='.wav') as voiceprint_file:
         voiceprint_file.write(voiceprint_data)
-        voiceprint_file.close()
+        voiceprint_file.flush()
 
-        spkrec_model = SpeakerRecognition.from_hparams(SPKREC_MODEL_PATH)
+        spkrec_model = SpeakerRecognition.from_hparams(SPKREC_MODEL_PATH, overrides={'pretrained_path': SPKREC_MODEL_PATH})
         asr_model = EncoderDecoderASR.from_hparams(ASR_MODEL_PATH)
-        speaker_score, speaker_prediction = spkrec_model.verify_files(ADAM_VOICE_PATH, voiceprint_file.name)
+        speaker_score = spkrec_model.verify_files(ADAM_VOICE_PATH, voiceprint_file.name)[0].item()
         voiceprint_phrase = asr_model.transcribe_file(voiceprint_file.name).strip().lower()
         transcription_score = len(set(voiceprint_phrase.split()) & set(challenge_words)) / len(challenge_words)
 
