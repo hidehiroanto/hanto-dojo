@@ -481,7 +481,7 @@
 </head>
 <body>
     <div class="background branding">
-        <div style="opacity: 0.5">{{ assistant_name|replace('AI', '</div><div>AI</div><div style="opacity: 0.5">') }}</div>
+        <div style="opacity: 0.5">{{ assistant_name | replace('AI', '</div><div>AI</div><div style="opacity: 0.5">') | safe }}</div>
     </div>
     <div class="card-container">
     </div>
