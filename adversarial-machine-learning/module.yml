@@ -9,3 +9,6 @@ challenges:
   - id: level3
     name: wAIfu
     image: hidehiroanto/challenge-llm
+  - id: adamtune
+    name: adamtune
+    image: hidehiroanto/challenge-speechbrain
