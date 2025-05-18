@@ -8,6 +8,8 @@ from speechbrain.inference.speaker import SpeakerRecognition
 import sys
 from tempfile import NamedTemporaryFile
 from time import sleep
+import torch
+import warnings
 
 ADAM_FACTS_PATH = '/challenge/adam_facts.txt'
 ADAM_VOICE_PATH = '/challenge/adam.wav'
@@ -32,7 +34,7 @@ __        __   _                            _
 /_/   \_\____/_/   \_\_|  |_| |_|  \___/|_| \_|_____|
 '''
 
-ARE_YOU_ADAM = fr'''
+ARE_YOU_ADAM = f'''
 Are you {DOUPE}?
 ╭━━━━━━━╮
 ┃● ══   ┃
@@ -47,7 +49,7 @@ Are you {DOUPE}?
 ╰━━━━━━━╯
 '''
 
-HELLO_ADAM = fr'''
+HELLO_ADAM = f'''
 Welcome, suspected {DOUPE}!
 ╭━━━━━━━╮
 ┃● ══   ┃
@@ -63,7 +65,7 @@ Welcome, suspected {DOUPE}!
 Would you like to access your tunes?
 '''
 
-PROVIDE_VOICE_ID_ADAM = r'''
+PROVIDE_VOICE_ID_ADAM = '''
 ╭━━━━━━━╮
 ┃● ══   ┃
 ┃███████┃
@@ -95,6 +97,9 @@ def disconnect():
     sys.exit(1)
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore', category=FutureWarning, module='speechbrain')
+    torch.backends.nnpack.set_flags(False)
+
     for line in WELCOME_BANNER.splitlines():
         print(line)
         sleep(SMALL_SLEEP)
@@ -150,11 +155,11 @@ if __name__ == '__main__':
         print(f'... transcription score (threshold is {TRANSCRIPTION_THRESHOLD}): {transcription_score}')
 
         if speaker_score >= SPEAKER_THRESHOLD and transcription_score >= TRANSCRIPTION_THRESHOLD:
-            print('SUCCESS!')
-            if os.geteuid() == 0:
-                print(f'{DOUPE} confirmed! Here is your flag: {open("/flag").read().strip()}')
+            print(f'SUCCESS! {DOUPE} confirmed!')
+            if os.access('/flag', os.R_OK):
+                print(f'Here is your flag: {open("/flag").read().strip()}')
             else:
-                print(f'{DOUPE} confirmed! However, you are not root, so you cannot access the flag.')
+                print('However, the flag cannot be accessed at this time.')
         else:
             if speaker_score < SPEAKER_THRESHOLD:
                 print('FAIL: you are not Adam!')
