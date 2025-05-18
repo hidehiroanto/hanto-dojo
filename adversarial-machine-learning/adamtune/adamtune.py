@@ -79,8 +79,8 @@ PROVIDE_VOICE_ID_ADAM = r'''
 
 BIG_SLEEP = 1.0
 SMALL_SLEEP = 0.05
-SPEAKER_THRESHOLD = 0.75
-TRANSCRIPTION_THRESHOLD = 0.75
+SPEAKER_THRESHOLD = 0.25
+TRANSCRIPTION_THRESHOLD = 0.66
 
 def check_for_yes(if_no):
 	if not input('> ').strip().lower().startswith('y'):
@@ -152,7 +152,7 @@ if __name__ == '__main__':
         if speaker_score >= SPEAKER_THRESHOLD and transcription_score >= TRANSCRIPTION_THRESHOLD:
             print('SUCCESS!')
             if os.geteuid() == 0:
-                print(f'{DOUPE} confirmed! Here is your flag: {open('/flag').read().strip()}')
+                print(f'{DOUPE} confirmed! Here is your flag: {open("/flag").read().strip()}')
             else:
                 print(f'{DOUPE} confirmed! However, you are not root, so you cannot access the flag.')
         else:
