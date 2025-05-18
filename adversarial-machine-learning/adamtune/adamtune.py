@@ -117,12 +117,11 @@ if __name__ == '__main__':
 
     sleep(BIG_SLEEP)
     print(PROVIDE_VOICE_ID_ADAM)
-    challenge_phrase = random.choice(open(SENTENCES_PATH).readlines()).strip()
-    challenge_words = challenge_phrase.split()
+    challenge_phrase = random.choice(open(SENTENCES_PATH).readlines())
     print(f'CHALLENGE PHRASE: {challenge_phrase}')
 
     print('Please make sure that your voiceprint is a high quality record.')
-    print('What is the size of your voiceprint .wav file?')
+    print('What is the size of your voiceprint file?')
     voiceprint_size = int(input('> '))
     if voiceprint_size < 1:
         print('This file is too small.')
@@ -135,7 +134,7 @@ if __name__ == '__main__':
     while len(voiceprint_data) < voiceprint_size:
         voiceprint_data += sys.stdin.buffer.read(voiceprint_size - len(voiceprint_data))
 
-    with NamedTemporaryFile(suffix='.wav') as voiceprint_file:
+    with NamedTemporaryFile() as voiceprint_file:
         voiceprint_file.write(voiceprint_data)
         voiceprint_file.flush()
 
@@ -143,7 +142,8 @@ if __name__ == '__main__':
         asr_model = EncoderDecoderASR.from_hparams(ASR_MODEL_PATH)
         speaker_score = spkrec_model.verify_files(ADAM_VOICE_PATH, voiceprint_file.name)[0].item()
         voiceprint_phrase = asr_model.transcribe_file(voiceprint_file.name).strip().lower()
-        transcription_score = len(set(voiceprint_phrase.split()) & set(challenge_words)) / len(challenge_words)
+        challenge_wordset = set(challenge_phrase.split())
+        transcription_score = len(set(voiceprint_phrase.split()) & challenge_wordset) / len(challenge_wordset)
 
         print('Classification complete.')
         print(f'... speaker verification score (threshold is {SPEAKER_THRESHOLD}): {speaker_score}')
@@ -152,10 +152,9 @@ if __name__ == '__main__':
         if speaker_score >= SPEAKER_THRESHOLD and transcription_score >= TRANSCRIPTION_THRESHOLD:
             print('SUCCESS!')
             if os.geteuid() == 0:
-                with open('/flag') as flag_file:
-                    print(f'{DOUPE} confirmed! Here is your flag: {flag_file.read().strip()}')
+                print(f'{DOUPE} confirmed! Here is your flag: {open('/flag').read().strip()}')
             else:
-                print('You are not root, so you cannot access the flag.')
+                print(f'{DOUPE} confirmed! However, you are not root, so you cannot access the flag.')
         else:
             if speaker_score < SPEAKER_THRESHOLD:
                 print('FAIL: you are not Adam!')
