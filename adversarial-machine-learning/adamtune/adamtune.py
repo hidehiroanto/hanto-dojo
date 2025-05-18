@@ -1,4 +1,4 @@
-#!/usr/bin/exec-suid -- /usr/bin/python3 -I
+#!/usr/bin/exec-suid --real -- /usr/bin/python3 -I
 
 import os
 import random
