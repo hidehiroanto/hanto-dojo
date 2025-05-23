@@ -151,9 +151,9 @@ if __name__ == '__main__':
     model_name = input('Enter the model name (press Enter for default): ')
     if not model_name:
         model_name = DEFAULT_MODEL
-    train_choice = input('Do you want to train the model? (y/N)').strip().lower()
+    train_choice = input('Do you want to train the model? (y/N): ').strip().lower()
     if train_choice.startswith('y'):
         train_model(model_name)
-    test_choice = input('Do you want to train the model? (y/N)').strip().lower()
+    test_choice = input('Do you want to train the model? (y/N): ').strip().lower()
     if test_choice.startswith('y'):
         test_model(model_name)
