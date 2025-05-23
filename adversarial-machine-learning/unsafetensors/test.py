@@ -21,6 +21,30 @@ test_dataset = datasets.MNIST(root=DATA_DIR, train=False, transform=transform)
 testloader = DataLoader(dataset=test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 criterion = nn.SmoothL1Loss()
 
+class Autoencoder(nn.Module):
+    def __init__(self):
+        super(Autoencoder, self).__init__()
+        self.relu = nn.ReLU()
+        self.encoder = nn.Sequential(
+            nn.Linear(28 * 28, 256),
+            self.relu,
+            nn.Linear(256, 128),
+            self.relu,
+            nn.Linear(128, 64),
+            self.relu
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(64, 128),
+            self.relu,
+            nn.Linear(128, 256),
+            self.relu,
+            nn.Linear(256, 28 * 28),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.decoder(self.encoder(x))
+
 def load_model(model_name):
     model_path = os.path.join(MODELS_DIR, model_name + '.pt')
     if not os.path.isfile(model_path):
