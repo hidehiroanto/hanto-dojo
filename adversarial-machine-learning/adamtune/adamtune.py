@@ -97,7 +97,7 @@ def disconnect():
     sys.exit(1)
 
 if __name__ == '__main__':
-    warnings.filterwarnings('ignore', category=FutureWarning, module='speechbrain')
+    warnings.filterwarnings('ignore', category=FutureWarning)
     torch.backends.nnpack.set_flags(False)
 
     for line in WELCOME_BANNER.splitlines():

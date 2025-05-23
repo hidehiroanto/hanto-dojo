@@ -12,3 +12,6 @@ challenges:
   - id: adamtune
     name: adamtune
     image: hidehiroanto/challenge-speechbrain
+  - id: unsafetensors
+    name: unsafetensors
+    image: hidehiroanto/challenge-ml
