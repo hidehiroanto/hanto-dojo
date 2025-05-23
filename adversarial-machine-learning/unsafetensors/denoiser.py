@@ -16,14 +16,15 @@ IMAGES_DIR = '/challenge/images'
 DEFAULT_MODEL = 'convolutional_autoencoder'
 BATCH_SIZE = 0x64
 NUM_EPOCHS = 0x8
+NOISE_FACTOR = 0.2
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
-transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+transform = transforms.ToTensor()
 train_dataset = datasets.MNIST(DATA_DIR, True, transform)
 test_dataset = datasets.MNIST(DATA_DIR, False, transform)
 train_loader = DataLoader(train_dataset, BATCH_SIZE, True)
 test_loader = DataLoader(test_dataset, BATCH_SIZE, False)
-criterion = nn.SmoothL1Loss()
+criterion = nn.MSELoss()
 optimizer_class = AdamDoupe
 
 class LinearAutoencoder(nn.Module):
@@ -95,7 +96,7 @@ def save_model(model, model_name):
     print(f'{model_name} saved to {model_path}')
 
 def add_noise(img):
-    return img + torch.randn(img.size()).to(device) * 0.2
+    return img + torch.randn(img.size()).to(device) * NOISE_FACTOR
 
 def train_model(model_name: str):
     if model_name not in available_models:
