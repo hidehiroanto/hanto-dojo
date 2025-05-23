@@ -1,5 +1,6 @@
 #!/usr/bin/exec-suid -- /usr/bin/python3 -I
 
+from math import sqrt
 import os
 import time
 import torch
@@ -15,8 +16,8 @@ DATA_DIR = '/challenge/data'
 IMAGES_DIR = '/challenge/images'
 DEFAULT_MODEL = 'convolutional_autoencoder'
 BATCH_SIZE = 0x64
-NUM_EPOCHS = 0x8
-NOISE_FACTOR = 0.2
+NUM_EPOCHS = 0x10
+NOISE_FACTOR = 0.125
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
 transform = transforms.ToTensor()
@@ -87,16 +88,22 @@ def load_model(model_name):
     model = torch.load(model_path)
     if not isinstance(model, nn.Module):
         raise TypeError(f'{model_name} is not a valid model: {model}')
-    print(f'{model_name} loaded from {model_path}')
+    print(f'Model {model_name} loaded from {model_path}')
     return model.to(device)
 
 def save_model(model, model_name):
     model_path = os.path.join(MODELS_DIR, model_name + '.pt')
     torch.save(model, model_path)
-    print(f'{model_name} saved to {model_path}')
+    print(f'Model {model_name} saved to {model_path}')
 
 def add_noise(img):
-    return img + torch.randn(img.size()).to(device) * NOISE_FACTOR
+    return torch.clamp(img + NOISE_FACTOR * torch.randn(img.size()).to(device), 0, 1)
+
+def make_grids(images):
+    make_pillow = transforms.ToPILImage()
+    row_size = round(sqrt(BATCH_SIZE))
+    resized_images = [img.view(img.shape[0], 1, 0x1c, 0x1c) for img in images]
+    return [make_pillow(make_grid(img, row_size)) for img in resized_images]
 
 def train_model(model_name: str):
     if model_name not in available_models:
@@ -139,22 +146,22 @@ def test_model(model_name: str):
             denoised_img = model(noisy_img)
             test_loss += criterion(original_img, denoised_img).item()
 
-            images = [original_img, noisy_img, denoised_img]
-            grid_images = [transforms.ToPILImage()(make_grid(img.view(img.shape[0], 1, 0x1c, 0x1c))) for img in images]
-            grid_images[0].save(os.path.join(images_subdir, f'batch_{batch_index}_original.png'))
-            grid_images[1].save(os.path.join(images_subdir, f'batch_{batch_index}_noisy.png'))
-            grid_images[2].save(os.path.join(images_subdir, f'batch_{batch_index}_denoised.png'))
+            grid_images = make_grids([original_img, noisy_img, denoised_img])
+            grid_images[0].save(os.path.join(images_subdir, f'{batch_index:02d}_original.png'))
+            grid_images[1].save(os.path.join(images_subdir, f'{batch_index:02d}_noisy.png'))
+            grid_images[2].save(os.path.join(images_subdir, f'{batch_index:02d}_denoised.png'))
         test_loss /= len(test_loader)
         print(f'Testing loss: {test_loss:.4f}')
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=FutureWarning)
+    print(f'Using device: {device}')
     model_name = input('Enter the model name (press Enter for default): ')
     if not model_name:
         model_name = DEFAULT_MODEL
     train_choice = input('Do you want to train the model? (y/N): ').strip().lower()
     if train_choice.startswith('y'):
         train_model(model_name)
-    test_choice = input('Do you want to train the model? (y/N): ').strip().lower()
+    test_choice = input('Do you want to test the model? (y/N): ').strip().lower()
     if test_choice.startswith('y'):
         test_model(model_name)
