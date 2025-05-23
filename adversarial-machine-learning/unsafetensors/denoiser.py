@@ -49,8 +49,8 @@ class LinearAutoencoder(nn.Module):
             nn.Sigmoid()
         )
 
-    def forward(self, x):
-        return self.decoder(self.encoder(x))
+    def forward(self, img):
+        return self.decoder(self.encoder(img))
 
 class ConvolutionalAutoencoder(nn.Module):
     def __init__(self):
@@ -72,9 +72,9 @@ class ConvolutionalAutoencoder(nn.Module):
             nn.Sigmoid()
         )
 
-    def forward(self, x):
-        x = self.decoder(self.encoder(x.view(-1, 1, 0x1c, 0x1c)))
-        return x.view(x.size(0), -1)
+    def forward(self, img):
+        img = self.decoder(self.encoder(img.view(-1, 1, 0x1c, 0x1c)))
+        return img.view(img.size(0), -1)
 
 available_models = {
     'linear_autoencoder': LinearAutoencoder,
@@ -120,7 +120,7 @@ def train_model(model_name: str):
             optimizer.zero_grad()
             train_loss.backward()
             optimizer.step()
-        print(f'Training loss: {train_loss.item():.4f}')
+        print(f'Training loss: {train_loss.item()}')
 
         validation_loss = 0
         with torch.no_grad():
@@ -130,7 +130,7 @@ def train_model(model_name: str):
                 denoised_img = model(noisy_img)
                 validation_loss += criterion(original_img, denoised_img).item()
         validation_loss /= len(test_loader)
-        print(f'Validation loss: {validation_loss:.4f}')
+        print(f'Validation loss: {validation_loss}')
     save_model(model, model_name)
 
 def test_model(model_name: str):
@@ -148,10 +148,11 @@ def test_model(model_name: str):
 
             grid_images = make_grids([original_img, noisy_img, denoised_img])
             grid_images[0].save(os.path.join(images_subdir, f'{batch_index:02d}_original.png'))
-            grid_images[1].save(os.path.join(images_subdir, f'{batch_index:02d}_noisy.png'))
-            grid_images[2].save(os.path.join(images_subdir, f'{batch_index:02d}_denoised.png'))
+            grid_images[1].save(os.path.join(images_subdir, f'{batch_index:02d}_with_noise.png'))
+            grid_images[2].save(os.path.join(images_subdir, f'{batch_index:02d}_without_noise.png'))
         test_loss /= len(test_loader)
-        print(f'Testing loss: {test_loss:.4f}')
+        print(f'Testing loss: {test_loss}')
+        print(f'Images saved to {images_subdir}')
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=FutureWarning)

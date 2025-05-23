@@ -15,3 +15,6 @@ challenges:
   - id: unsafetensors
     name: unsafetensors
     image: hidehiroanto/challenge-ml
+  - id: safe-harbor
+    name: Safe Harbor
+    image: hidehiroanto/challenge-ml
