@@ -1,5 +1,6 @@
 #!/usr/bin/exec-suid -- /usr/bin/python3 -I
 
+from collections import OrderedDict
 from math import sqrt
 import os
 import time
@@ -9,7 +10,7 @@ from torch.optim import Adam as AdamDoupe
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from torchvision.utils import make_grid
-import warnings
+from warnings import filterwarnings
 
 MODELS_DIR = '/challenge/models'
 DATA_DIR = '/challenge/data'
@@ -48,7 +49,7 @@ class LinearAutoencoder(nn.Module):
             nn.Sigmoid()
         )
 
-    def forward(self, img):
+    def forward(self, img: torch.Tensor):
         return self.decoder(self.encoder(img))
 
 class ConvolutionalAutoencoder(nn.Module):
@@ -71,7 +72,7 @@ class ConvolutionalAutoencoder(nn.Module):
             nn.Sigmoid()
         )
 
-    def forward(self, img):
+    def forward(self, img: torch.Tensor):
         img = self.decoder(self.encoder(img.view(-1, 1, 0x1c, 0x1c)))
         return img.view(img.size(0), -1)
 
@@ -80,25 +81,30 @@ available_models = {
     'convolutional_autoencoder': ConvolutionalAutoencoder
 }
 
-def load_model(model_name):
+def load_model(model_name: str) -> nn.Module:
     model_path = os.path.join(MODELS_DIR, model_name + '.pt')
     if not os.path.isfile(model_path):
         raise FileNotFoundError(f'Model {model_name} not found in {MODELS_DIR}')
-    model = torch.load(model_path, weights_only=True)
-    if not isinstance(model, nn.Module):
-        raise TypeError(f'{model_name} is not a valid model: {model}')
+    load_data = torch.load(model_path, weights_only=True)
+    if isinstance(load_data, nn.Module):
+        model = load_data
+    elif isinstance(load_data, OrderedDict) and model_name in available_models:
+        model = available_models[model_name]()
+        model.load_state_dict(load_data)
+    else:
+        raise TypeError(f'{model_name} is not a valid model: {load_data}')
     print(f'Model {model_name} loaded from {model_path}')
     return model.to(device)
 
-def save_model(model, model_name):
+def save_model(model: nn.Module, model_name: str):
     model_path = os.path.join(MODELS_DIR, model_name + '.pt')
-    torch.save(model, model_path)
+    torch.save(model.state_dict(), model_path)
     print(f'Model {model_name} saved to {model_path}')
 
-def add_noise(img):
+def add_noise(img: torch.Tensor) -> torch.Tensor:
     return torch.clamp(img + NOISE_FACTOR * torch.randn(img.size()).to(device), 0, 1)
 
-def make_grids(images):
+def make_grids(images: torch.Tensor) -> list:
     make_pillow = transforms.ToPILImage()
     row_size = round(sqrt(BATCH_SIZE))
     resized_images = [img.view(-1, 1, 0x1c, 0x1c) for img in images]
@@ -154,7 +160,7 @@ def test_model(model_name: str):
         print(f'Images saved to {images_subdir}')
 
 if __name__ == '__main__':
-    warnings.filterwarnings('ignore', category=FutureWarning)
+    filterwarnings('ignore', category=FutureWarning)
     print(f'Using device: {device}')
     model_name = input('Enter the model name (press Enter for default): ')
     if not model_name:
