@@ -20,12 +20,11 @@ NUM_EPOCHS = 0x10
 NOISE_FACTOR = 0.125
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
-transform = transforms.ToTensor()
-train_dataset = datasets.MNIST(DATA_DIR, True, transform)
-test_dataset = datasets.MNIST(DATA_DIR, False, transform)
+train_dataset = datasets.MNIST(DATA_DIR, True, transforms.ToTensor())
+test_dataset = datasets.MNIST(DATA_DIR, False, transforms.ToTensor())
 train_loader = DataLoader(train_dataset, BATCH_SIZE, True)
 test_loader = DataLoader(test_dataset, BATCH_SIZE, False)
-criterion = nn.MSELoss()
+loss_function = nn.MSELoss()
 optimizer_class = AdamDoupe
 
 class LinearAutoencoder(nn.Module):
@@ -102,7 +101,7 @@ def add_noise(img):
 def make_grids(images):
     make_pillow = transforms.ToPILImage()
     row_size = round(sqrt(BATCH_SIZE))
-    resized_images = [img.view(img.shape[0], 1, 0x1c, 0x1c) for img in images]
+    resized_images = [img.view(-1, 1, 0x1c, 0x1c) for img in images]
     return [make_pillow(make_grid(img, row_size)) for img in resized_images]
 
 def train_model(model_name: str):
@@ -116,7 +115,7 @@ def train_model(model_name: str):
             original_img = batch_data.view(batch_data.size(0), -1).to(device)
             noisy_img = add_noise(original_img)
             denoised_img = model(noisy_img)
-            train_loss = criterion(original_img, denoised_img)
+            train_loss = loss_function(original_img, denoised_img)
             optimizer.zero_grad()
             train_loss.backward()
             optimizer.step()
@@ -128,7 +127,7 @@ def train_model(model_name: str):
                 original_img = batch_data.view(batch_data.size(0), -1).to(device)
                 noisy_img = add_noise(original_img)
                 denoised_img = model(noisy_img)
-                validation_loss += criterion(original_img, denoised_img).item()
+                validation_loss += loss_function(original_img, denoised_img).item()
         validation_loss /= len(test_loader)
         print(f'Validation loss: {validation_loss}')
     save_model(model, model_name)
@@ -144,7 +143,7 @@ def test_model(model_name: str):
             original_img = batch_data.view(batch_data.size(0), -1).to(device)
             noisy_img = add_noise(original_img)
             denoised_img = model(noisy_img)
-            test_loss += criterion(original_img, denoised_img).item()
+            test_loss += loss_function(original_img, denoised_img).item()
 
             grid_images = make_grids([original_img, noisy_img, denoised_img])
             grid_images[0].save(os.path.join(images_subdir, f'{batch_index:02d}_original.png'))
