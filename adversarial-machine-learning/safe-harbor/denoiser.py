@@ -155,7 +155,6 @@ def test_model(model_name: str):
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=FutureWarning)
-    torch.serialization.add_safe_globals(list(available_models.values()))
     print(f'Using device: {device}')
     model_name = input('Enter the model name (press Enter for default): ')
     if not model_name:
