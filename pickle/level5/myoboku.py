@@ -5,7 +5,7 @@ import jinja2
 import os
 import psutil
 
-host, port = ('myoboku.zan', 80) if os.geteuid() == 0 else ('localhost', 1337)
+host, port = ('myoboku.zan', 80) if os.geteuid() == os.stat('/flag').st_uid else ('localhost', 1337)
 
 def peer_process_of(fd: int) -> psutil.Process:
     s_conn = next(conn for conn in psutil.Process().net_connections() if conn.fd == fd)

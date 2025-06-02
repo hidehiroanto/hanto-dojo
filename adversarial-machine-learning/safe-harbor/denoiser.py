@@ -161,13 +161,14 @@ def test_model(model_name: str):
 
 if __name__ == '__main__':
     filterwarnings('ignore', category=FutureWarning)
+    filterwarnings('ignore', category=UserWarning)
     print(f'Using device: {device}')
     model_name = input('Enter the model name (press Enter for default): ')
     if not model_name:
         model_name = DEFAULT_MODEL
-    train_choice = input('Do you want to train the model? (y/N): ').strip().lower()
-    if train_choice.startswith('y'):
+    train_choice = input('Do you want to train the model? (y/N): ')
+    if train_choice.strip().lower().startswith('y'):
         train_model(model_name)
-    test_choice = input('Do you want to test the model? (y/N): ').strip().lower()
-    if test_choice.startswith('y'):
+    test_choice = input('Do you want to test the model? (y/N): ')
+    if test_choice.strip().lower().startswith('y'):
         test_model(model_name)

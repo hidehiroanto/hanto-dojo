@@ -5,7 +5,7 @@ import html
 import os
 
 app = flask.Flask(__name__)
-flag, port = (open('/flag').read().strip(), 80) if os.geteuid() == 0 else ('pwn.college{practice}', 1337)
+flag, port = (open('/flag').read().strip(), 80) if os.geteuid() == os.stat('/flag').st_uid else ('pwn.college{practice}', 1337)
 
 users = {
     'admin': flag,

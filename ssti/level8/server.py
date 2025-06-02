@@ -5,7 +5,7 @@ import html
 import os
 
 app = flask.Flask(__name__)
-flag_length, port = (os.path.getsize('/flag') - 1, 80) if os.geteuid() == 0 else (len('pwn.college{practice}'), 1337)
+flag_length, port = (os.path.getsize('/flag') - 1, 80) if os.geteuid() == os.stat('/flag').st_uid else (len('pwn.college{practice}'), 1337)
 
 def evaluate(expression: str) -> str:
     tokens = expression.split(' ')

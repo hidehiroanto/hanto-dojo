@@ -1,0 +1,6 @@
+#!/bin/sh
+
+find /challenge -type d -exec chmod 00755 {} \;
+find /challenge -type f -exec chmod 644 {} \;
+
+chmod 4755 /challenge/chinese_adamtune.py

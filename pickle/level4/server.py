@@ -5,7 +5,7 @@ import jinja2
 import os
 
 host, port, flag_length = 'localhost', 1337, len('pwn.college{practice}')
-if os.geteuid() == 0:
+if os.geteuid() == os.stat('/flag').st_uid:
     host, port, flag_length = 'bikini.bottom', 80, os.path.getsize('/flag') - 1
 
 app = flask.Flask(__name__)

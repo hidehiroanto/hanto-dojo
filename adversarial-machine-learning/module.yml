@@ -2,19 +2,28 @@ name: Adversarial Machine Learning
 challenges:
   - id: level1
     name: kohAI
-    image: hidehiroanto/challenge-llm
+    image: hidehiroanto/challenge-ml:smollm2
   - id: level2
     name: senpAI
-    image: hidehiroanto/challenge-llm
+    image: hidehiroanto/challenge-ml:smollm2
   - id: level3
     name: wAIfu
-    image: hidehiroanto/challenge-llm
+    image: hidehiroanto/challenge-ml:smollm2
   - id: adamtune
     name: adamtune
-    image: hidehiroanto/challenge-speechbrain
+    image: hidehiroanto/challenge-ml:speechbrain
+  - id: the-way-of-code
+    name: The Way of Code
+    image: hidehiroanto/challenge-ml:speechbrain
   - id: unsafetensors
     name: unsafetensors
-    image: hidehiroanto/challenge-ml
+    image: hidehiroanto/challenge-ml:python3.11
   - id: safe-harbor
     name: Safe Harbor
-    image: hidehiroanto/challenge-ml
+    image: hidehiroanto/challenge-ml:python3.11
+  - id: lambda-complex
+    name: Lambda Complex
+    image: hidehiroanto/challenge-ml:python3.11
+  - id: combine-core
+    name: Combine Core
+    image: hidehiroanto/challenge-ml:python3.11

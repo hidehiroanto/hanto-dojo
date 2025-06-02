@@ -10,7 +10,7 @@ app = flask.Flask(__name__)
 sio = flask_socketio.SocketIO(app, transports=['websocket'])
 
 flag = open('/flag').read().strip()
-pipe = transformers.pipeline('text-generation', '/opt/SmolLM2-135M-Instruct')
+pipe = transformers.pipeline('text-generation', '/opt/HuggingFaceTB/SmolLM2-1.7B-Instruct')
 
 partial_flag = flag[flag.find('{') + 1:flag.find('}')] if 0 <= flag.find('{') < flag.find('}') else flag
 
