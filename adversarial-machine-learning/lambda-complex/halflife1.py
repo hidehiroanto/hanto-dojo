@@ -11,7 +11,7 @@ import tensorflow as tf
 import time
 
 MODELS_DIR = '/challenge/models'
-MAX_FILE_SIZE = 0x20e0
+MAX_FILE_SIZE = 0x4000
 
 TRAIN_DATA = list(b'EP-0021') + [0.9]
 TEST_DATA = list(b'GG-3883') + [1.05]
@@ -39,15 +39,18 @@ def upload():
     if file_size > MAX_FILE_SIZE:
         return flask.jsonify({'error': 'File too big'}), 400
 
-    filetype =  magic.from_descriptor(file.fileno())
-    if not filetype.startswith('Hierarchical Data Format (version 5) data'):
-        return flask.jsonify({'error': 'Invalid file type'}), 400
     if not os.path.isdir(MODELS_DIR):
         os.mkdir(MODELS_DIR)
     model_path = os.path.join(MODELS_DIR, f'{timestamp}.h5')
     if os.path.isfile(model_path):
         os.remove(model_path)
     file.save(model_path)
+
+    filetype =  magic.from_file(model_path, True)
+    if filetype != 'application/x-hdf5':
+        return flask.jsonify({'error': 'Invalid file type'}), 400
+    os.rename(model_path, model_path + '.h5')
+    model_path += '.h5'
 
     try:
         model = keras.saving.load_model(model_path)

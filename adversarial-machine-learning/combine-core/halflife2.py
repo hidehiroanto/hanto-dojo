@@ -11,7 +11,7 @@ import tensorflow as tf
 import time
 
 MODELS_DIR = '/challenge/models'
-MAX_FILE_SIZE = 0x6000
+MAX_FILE_SIZE = 0x4000
 
 TRAIN_DATA = list(b'Energy Ball')
 TEST_DATA = list(b'Watermelon')
@@ -39,15 +39,18 @@ def upload():
     if file_size > MAX_FILE_SIZE:
         return flask.jsonify({'error': 'File too big'}), 400
 
-    filetype =  magic.from_descriptor(file.fileno())
-    if not filetype.startswith('Zip archive data'):
-        return flask.jsonify({'error': 'Invalid file type'}), 400
     if not os.path.isdir(MODELS_DIR):
         os.mkdir(MODELS_DIR)
     model_path = os.path.join(MODELS_DIR, f'{timestamp}.keras')
     if os.path.isfile(model_path):
         os.remove(model_path)
     file.save(model_path)
+
+    filetype =  magic.from_file(model_path)
+    if filetype != 'application/zip':
+        return flask.jsonify({'error': 'Invalid file type'}), 400
+    os.rename(model_path, model_path + '.keras')
+    model_path += '.keras'
 
     try:
         model = keras.saving.load_model(model_path)
