@@ -47,7 +47,7 @@ def upload():
     file.save(model_path)
 
     filetype =  magic.from_file(model_path, True)
-    if filetype != 'application/x-hdf5':
+    if not filetype.startswith('application/x-hdf'):
         return flask.jsonify({'error': 'Invalid file type'}), 400
     os.rename(model_path, model_path + '.h5')
     model_path += '.h5'

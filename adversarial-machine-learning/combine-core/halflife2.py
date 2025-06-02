@@ -47,7 +47,7 @@ def upload():
     file.save(model_path)
 
     filetype =  magic.from_file(model_path, True)
-    if filetype != 'application/zip':
+    if not filetype.startswith('application/zip'):
         return flask.jsonify({'error': 'Invalid file type'}), 400
     os.rename(model_path, model_path + '.keras')
     model_path += '.keras'
