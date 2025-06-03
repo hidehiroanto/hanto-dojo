@@ -13,8 +13,8 @@ import time
 MODELS_DIR = '/challenge/models'
 MAX_FILE_SIZE = 0x4000
 
-TRAIN_DATA = list(b'EP-0021') + [0.9]
-TEST_DATA = list(b'GG-3883') + [1.05]
+TRAIN_DATA = tf.constant([list(b'EP-0021') + [0.9]])
+TEST_DATA = tf.constant([list(b'GG-3883') + [1.05]])
 
 app = flask.Flask(__name__)
 app.secret_key = os.urandom(8)
@@ -41,7 +41,7 @@ def upload():
 
     if not os.path.isdir(MODELS_DIR):
         os.mkdir(MODELS_DIR)
-    model_path = os.path.join(MODELS_DIR, f'{timestamp}.h5')
+    model_path = os.path.join(MODELS_DIR, str(timestamp))
     if os.path.isfile(model_path):
         os.remove(model_path)
     file.save(model_path)
@@ -58,7 +58,7 @@ def upload():
         return flask.jsonify({'error': 'Invalid model file'}), 400
 
     try:
-        result = model(tf.convert_to_tensor(TEST_DATA))
+        result = model(TEST_DATA)
     except:
         return flask.jsonify({'error': 'Resonance cascade, check for leaks from Xen'})
 

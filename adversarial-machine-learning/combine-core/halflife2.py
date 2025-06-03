@@ -13,8 +13,8 @@ import time
 MODELS_DIR = '/challenge/models'
 MAX_FILE_SIZE = 0x4000
 
-TRAIN_DATA = list(b'Energy Ball')
-TEST_DATA = list(b'Watermelon')
+TRAIN_DATA = tf.constant([[float(hash('Energy Ball'))]])
+TEST_DATA = tf.constant([[0.0]]) # Zero Point Energy Field Manipulator
 
 app = flask.Flask(__name__)
 app.secret_key = os.urandom(8)
@@ -41,7 +41,7 @@ def upload():
 
     if not os.path.isdir(MODELS_DIR):
         os.mkdir(MODELS_DIR)
-    model_path = os.path.join(MODELS_DIR, f'{timestamp}.keras')
+    model_path = os.path.join(MODELS_DIR, str(timestamp))
     if os.path.isfile(model_path):
         os.remove(model_path)
     file.save(model_path)
@@ -58,7 +58,7 @@ def upload():
         return flask.jsonify({'error': 'Invalid model file'}), 400
 
     try:
-        result = model(tf.convert_to_tensor(TEST_DATA))
+        result = model(TEST_DATA)
     except:
         return flask.jsonify({'error': 'You created a rift in the spacetime continuum, time to wait for Half-Life 3.'})
 
