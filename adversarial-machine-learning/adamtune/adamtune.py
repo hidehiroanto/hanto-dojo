@@ -99,6 +99,7 @@ def disconnect():
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=FutureWarning)
     torch.backends.nnpack.set_flags(False)
+    os.environ.update({key: '1' for key in ['HF_DATASETS_OFFLINE', 'HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE']})
 
     for line in WELCOME_BANNER.splitlines():
         print(line)

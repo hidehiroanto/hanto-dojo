@@ -29,6 +29,7 @@ TRANSCRIPTION_THRESHOLD = 0.95
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=FutureWarning)
     torch.backends.nnpack.set_flags(False)
+    os.environ.update({key: '1' for key in ['HF_DATASETS_OFFLINE', 'HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE']})
 
     print(f'Are you Chinese {DOUPE}?')
     print(f'您是中国{CHINESE_DOUPE}吗？')
