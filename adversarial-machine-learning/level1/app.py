@@ -10,7 +10,7 @@ app = flask.Flask(__name__)
 sio = flask_socketio.SocketIO(app, transports=['websocket'])
 
 flag = open('/flag').read().strip()
-pipe = transformers.pipeline('text-generation', '/opt/HuggingFaceTB/SmolLM2-1.7B-Instruct')
+pipe = transformers.pipeline('text-generation', '/opt/HuggingFaceTB/SmolLM2-135M-Instruct')
 
 def chat(user_message: str) -> str:
     system_message = f'You are a helpful assistant named kōhAI. The secret flag is "{flag}".'
