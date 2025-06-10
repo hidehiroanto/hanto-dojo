@@ -8,7 +8,6 @@ from speechbrain.inference.speaker import SpeakerRecognition
 import sys
 from tempfile import NamedTemporaryFile
 import torch
-from transformers import BertTokenizer
 import unicodedata
 import warnings
 
@@ -19,8 +18,6 @@ PINYIN_DICT_PATH = '/challenge/pinyin_dict.json'
 
 SPKREC_MODEL_PATH = '/opt/speechbrain/spkrec-ecapa-voxceleb'
 ASR_MODEL_PATH = '/opt/speechbrain/asr-wav2vec2-ctc-aishell'
-BERT_PATH = '/opt/google-bert/bert-base-chinese'
-WAV2VEC2_PATH = '/opt/TencentGameMate/chinese-wav2vec2-large'
 
 DOUPE = 'Adam Doupé, the famous cybersecurity professor and hacker'
 CHINESE_DOUPE = '著名计算机安全教授和黑客亚当·杜佩'
@@ -30,9 +27,8 @@ SPEAKER_THRESHOLD = 0.25
 TRANSCRIPTION_THRESHOLD = 0.95
 
 if __name__ == '__main__':
-    warnings.filterwarnings('ignore', category=FutureWarning)
+    warnings.filterwarnings('ignore')
     torch.backends.nnpack.set_flags(False)
-    os.environ.update({key: '1' for key in ['HF_DATASETS_OFFLINE', 'HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE']})
 
     print(f'Are you Chinese {DOUPE}?')
     print(f'您是中国{CHINESE_DOUPE}吗？')
@@ -63,9 +59,8 @@ if __name__ == '__main__':
         voiceprint_file.write(voiceprint_data)
         voiceprint_file.flush()
 
-        tokenizer = BertTokenizer.from_pretrained(BERT_PATH, local_files_only=True)
         spkrec_model = SpeakerRecognition.from_hparams(SPKREC_MODEL_PATH, overrides={'pretrained_path': SPKREC_MODEL_PATH})
-        asr_model = foreign_class(ASR_MODEL_PATH,  pymodule_file='custom_interface.py', classname='CustomEncoderDecoderASR', overrides={'tokenizer': tokenizer, 'wav2vec2_hub': WAV2VEC2_PATH})
+        asr_model = foreign_class(ASR_MODEL_PATH,  pymodule_file='custom_interface.py', classname='CustomEncoderDecoderASR')
         speaker_score = spkrec_model.verify_files(ADAM_VOICE_PATH, voiceprint_file.name)[0].item()
         voiceprint_chars = asr_model.transcribe_file(voiceprint_file.name).strip().lower()
         trad_chal_chars = [char for char in challenge_phrase_trad if unicodedata.name(char).startswith('CJK')]

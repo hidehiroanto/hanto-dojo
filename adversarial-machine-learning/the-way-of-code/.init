@@ -4,3 +4,5 @@ find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
 chmod 4755 /challenge/chinese_adamtune.py
+
+sed -i 's#TencentGameMate#/opt/&#;s#bert-base-chinese#/opt/google-bert/&#' /opt/speechbrain/asr-wav2vec2-ctc-aishell/hyperparams.yaml
