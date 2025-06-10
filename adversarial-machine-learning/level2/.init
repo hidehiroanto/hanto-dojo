@@ -5,6 +5,8 @@ GUNICORN_LOG=/var/log/gunicorn
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
+chmod 4755 /challenge/senpai.py
+
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p $GUNICORN_LOG
 cd /challenge
