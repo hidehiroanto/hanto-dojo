@@ -47,7 +47,7 @@ if __name__ == '__main__':
     if voiceprint_size < 1:
         print('该文件太小。')
         sys.exit(1)
-    if voiceprint_size > 0x4b000:
+    if voiceprint_size > 0x1000000:
         print('该文件太大。')
         sys.exit(1)
     print('请立即提供您的声纹文件：')
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         spkrec_model = SpeakerRecognition.from_hparams(SPKREC_MODEL_PATH, overrides={'pretrained_path': SPKREC_MODEL_PATH})
         asr_model = foreign_class(ASR_MODEL_PATH,  pymodule_file='custom_interface.py', classname='CustomEncoderDecoderASR')
         speaker_score = spkrec_model.verify_files(ADAM_VOICE_PATH, voiceprint_file.name)[0].item()
-        voiceprint_chars = asr_model.transcribe_file(voiceprint_file.name).strip().lower()
+        voiceprint_chars = asr_model.transcribe_file(voiceprint_file.name)
         trad_chal_chars = [char for char in challenge_phrase_trad if unicodedata.name(char).startswith('CJK')]
         simp_chal_chars = [char for char in challenge_phrase_simp if unicodedata.name(char).startswith('CJK')]
 
