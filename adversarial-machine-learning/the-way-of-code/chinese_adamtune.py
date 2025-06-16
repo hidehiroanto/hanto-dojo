@@ -34,8 +34,8 @@ if __name__ == '__main__':
     print(f'您是中国{CHINESE_DOUPE}吗？')
 
     chapter_num = random.randint(1, DAO_DE_JING_CHAPTERS)
-    challenge_phrase_trad = open(DAO_DE_JING_TRAD_PATH).readlines()[chapter_num - 1]
-    challenge_phrase_simp = open(DAO_DE_JING_SIMP_PATH).readlines()[chapter_num - 1]
+    challenge_phrase_trad = open(DAO_DE_JING_TRAD_PATH).readlines()[chapter_num - 1].strip()
+    challenge_phrase_simp = open(DAO_DE_JING_SIMP_PATH).readlines()[chapter_num - 1].strip()
 
     print(f'您熟悉《道德经》第{chapter_num}章吗？')
     print(f'繁體中文：{challenge_phrase_trad}')
