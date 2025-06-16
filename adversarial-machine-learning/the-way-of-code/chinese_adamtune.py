@@ -24,7 +24,7 @@ CHINESE_DOUPE = '著名计算机安全教授和黑客亚当·杜佩'
 
 DAO_DE_JING_CHAPTERS = 81
 SPEAKER_THRESHOLD = 0.25
-TRANSCRIPTION_THRESHOLD = 0.95
+TRANSCRIPTION_THRESHOLD = 0.5
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
@@ -69,11 +69,17 @@ if __name__ == '__main__':
         with open(PINYIN_DICT_PATH) as pinyin_dict_file:
             pinyin_dict = {chr(int(key)): value.split(',') for key, value in json.load(pinyin_dict_file).items()}
 
-        character_matches = 0
-        for voiceprint_char, trad_chal_char, simp_chal_char in zip(voiceprint_chars, trad_chal_chars, simp_chal_chars):
-            if set(pinyin_dict.get(voiceprint_char, [])) & set(pinyin_dict[trad_chal_char] + pinyin_dict[simp_chal_char]):
-                character_matches += 1
-        transcription_score = character_matches / len(simp_chal_chars)
+        distance_sum = 0
+        for phrase_index in range(len(simp_chal_chars)):
+            min_match_distance = 1.0
+            for voiceprint_index in range(len(voiceprint_chars)):
+                heteronyms = pinyin_dict.get(trad_chal_chars[phrase_index], []) + pinyin_dict.get(simp_chal_chars[phrase_index], [])
+                if set(pinyin_dict.get(voiceprint_chars[voiceprint_index], [])) & set(heteronyms):
+                    match_distance = abs(voiceprint_index / len(voiceprint_chars) - phrase_index / len(simp_chal_chars))
+                    if match_distance < min_match_distance:
+                        min_match_distance = match_distance
+            distance_sum += min_match_distance
+        transcription_score = 1.0 - distance_sum / max(len(simp_chal_chars), len(voiceprint_chars))
 
         print('分类完成。')
         print(f'... 说话人验证分数（阈值为 {SPEAKER_THRESHOLD}）：{speaker_score}')
