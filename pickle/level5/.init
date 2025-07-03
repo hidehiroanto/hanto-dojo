@@ -1,4 +1,4 @@
-#!/usr/bin/exec-suid -- /usr/bin/bash -p
+#!/bin/bash
 
 PATH=/usr/bin
 
