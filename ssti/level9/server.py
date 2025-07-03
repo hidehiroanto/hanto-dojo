@@ -46,8 +46,8 @@ def challenge_get():
         flask.abort(400, 'Sorry, this application does not support the use of square brackets to override order of operations.')
     if '_' in escaped_expression:
         flask.abort(400, 'Sorry, this application does not support underscores as visual separators for digit grouping purposes in numeric literals.')
-    if 't' in escaped_expression:
-        flask.abort(400, 'Sorry, this application does not support tea.')
+    if escaped_expression.count('t') > 2:
+        flask.abort(400, 'Sorry, this application does not support that much tea.')
     return flask.render_template_string(f'''
         <!doctype html>
         <html lang=en>
