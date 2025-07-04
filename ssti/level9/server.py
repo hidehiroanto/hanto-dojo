@@ -7,16 +7,6 @@ import os
 app = flask.Flask(__name__)
 flag_length, port = (os.path.getsize('/flag') - 1, 80) if os.geteuid() == os.stat('/flag').st_uid else (len('pwn.college{practice}'), 1337)
 
-def evaluate(expression: str) -> str:
-    tokens = expression.split(' ')
-    if len(tokens) != 3:
-        return 'Error: Sorry, this application only supports evaluating a single infix binary expression with one operator and two operands, separated by single spaces.'
-    if tokens[1] not in ['+', '-', '*', '/']:
-        return 'Error: Sorry, this application does not support evaluating binary expressions with operators other than +, -, *, and /.'
-    if not tokens[0].isdigit() or not tokens[2].isdigit():
-        return 'Error: Sorry, this application only supports evaluating expressions with integer operands.'
-    return f'Result: {eval(expression)}'
-
 @app.route('/')
 def challenge_get():
     expression = flask.request.args.get('expression')
@@ -46,8 +36,8 @@ def challenge_get():
         flask.abort(400, 'Sorry, this application does not support the use of square brackets to override order of operations.')
     if '_' in escaped_expression:
         flask.abort(400, 'Sorry, this application does not support underscores as visual separators for digit grouping purposes in numeric literals.')
-    if escaped_expression.count('t') > 2:
-        flask.abort(400, 'Sorry, this application does not support that much tea.')
+    if escaped_expression.count('t') > 1:
+        flask.abort(400, 'Sorry, this application does not support more than one cup of tea.')
     return flask.render_template_string(f'''
         <!doctype html>
         <html lang=en>
@@ -64,7 +54,7 @@ def challenge_get():
                     <input type="submit" value="Submit">
                 </form>
                 <p>Expression: {escaped_expression}</p>
-                <p>Result: {evaluate(escaped_expression)}</p>
+                <p>Result: {{{{ {escaped_expression} }}}}</p>
             </body>
         </html>
     ''')
