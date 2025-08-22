@@ -1,5 +1,7 @@
 name: Lectures
 image: pwncollege/challenge-lecture
+interfaces:
+  Challenge: 80
 challenges:
   - id: lecture-1
     name: 11 HOURS Stunning 4K Underwater Footage and Music
