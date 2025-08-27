@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.5.0/xterm.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.3/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/5.1.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.5.0/xterm.js"></script>
+    <script src="static/js/script.js"></script>
+</head>
+
+<body>
+    <div class="background branding">
+        <div style="opacity: 0.5">{{ assistant_name | replace('AI', '</div><div>AI</div><div style="opacity: 0.5">') | safe }}</div>
+        <img src="static/images/genmaicha.jpg" alt="genmAIcha tea, produced by Yamamotoyama of America, both un-steeped, and steeped and strained in a clear glass mug.">
+    </div>
+    <div class="card-container">
+    </div>
+    <div id="status" class="card" hidden>
+    </div>
+    <div class="footer">
+        <div class="float">
+            <div class="interaction">
+                <div class="card prompt">
+                    <div>
+                        <div id="prompt-message" class="tabcontent active">
+                            <p id="prompt-status" hidden></p>
+                            <textarea placeholder="Send a message"></textarea>
+                        </div>
+                        <div id="prompt-terminal" class="tabcontent" hidden>
+                            <pre><code>...</code></pre>
+                        </div>
+                        <div id="prompt-file" class="tabcontent" hidden>
+                            <pre><code>...</code></pre>
+                        </div>
+                    </div>
+                    <ul class="tabs main">
+                        <li>
+                            <a class="tablink active" onmouseover="openTab(event, 'prompt-message')" title="Message">
+                                <i class="fas fa-comment"></i> Message
+                            </a>
+                        </li>
+                        <li>
+                            <a id="terminal-btn" class="tablink" onmouseover="openTab(event, 'prompt-terminal')" data-active="true" title="Terminal">
+                                <i class="fas fa-terminal"></i> Terminal
+                            </a>
+                        </li>
+                        <li>
+                            <a id="file-btn" class="tablink" onmouseover="openTab(event, 'prompt-file')" data-active="true" title="File">
+                                <i class="fas fa-file"></i> File
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="tabs secondary">
+                        <li><a class="tablink" title="Send Message"><i class="fas fa-play"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <p id="beta-notify" class="lower-notification" hidden>You are testing a beta version of {{ assistant_name }}! - <a href="#" id="beta-opt-out">Click here to opt-out.</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

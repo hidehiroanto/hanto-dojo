@@ -1,0 +1,12 @@
+#!/bin/sh
+
+GUNICORN_LOG=/var/log/gunicorn
+
+find /challenge -type d -exec chmod 00755 {} \;
+find /challenge -type f -exec chmod 644 {} \;
+
+export PYTHONDONTWRITEBYTECODE=1
+mkdir -p $GUNICORN_LOG
+cd /challenge
+gunicorn -b :80 -k eventlet --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
+until curl -fs localhost:80 >/dev/null; do sleep 0.1; done

@@ -3,12 +3,23 @@ challenges:
   - id: level1
     name: kohAI
     image: hidehiroanto/challenge-ml:smollm2
+    interfaces:
+      Challenge: 80
   - id: level2
     name: senpAI
     image: hidehiroanto/challenge-ml:smollm2
+    interfaces:
+      Challenge: 80
   - id: level3
     name: wAIfu
     image: hidehiroanto/challenge-ml:smollm2
+    interfaces:
+      Challenge: 80
+  - id: genmai
+    name: genmAI
+    image: hidehiroanto/challenge-ml:llama-cpp-gemma
+    interfaces:
+      Challenge: 80
   - id: adamtune
     name: adamtune
     image: hidehiroanto/challenge-ml:speechbrain
