@@ -15,7 +15,7 @@ system_message = open('/challenge/system_prompt.txt').read().replace('{challenge
 
 app = flask.Flask(__name__)
 sio = flask_socketio.SocketIO(app, transports=['websocket'])
-model = llama_cpp.Llama(MODEL_PATH)
+model = llama_cpp.Llama(MODEL_PATH, verbose=False)
 
 def chat(user_message: str) -> str:
     messages = [{'role': 'system', 'content': system_message}, {'role': 'user', 'content': user_message}]
