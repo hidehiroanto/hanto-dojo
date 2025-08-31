@@ -17,7 +17,7 @@ challenges:
       Challenge: 80
   - id: genmai
     name: genmAI
-    image: hidehiroanto/challenge-ml:gemma-cpp
+    image: hidehiroanto/challenge-ml:llama-cpp-gemma
     interfaces:
       Challenge: 80
   - id: adamtune
