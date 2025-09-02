@@ -20,6 +20,11 @@ challenges:
     image: hidehiroanto/challenge-ml:llama-cpp-gemma
     interfaces:
       Challenge: 80
+  - id: liquid-snake
+    name: Liquid Snake
+    image: hidehiroanto/challenge-ml:liquid
+    interfaces:
+      Challenge: 80
   - id: adamtune
     name: adamtune
     image: hidehiroanto/challenge-ml:speechbrain
