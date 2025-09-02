@@ -12,4 +12,4 @@ cd /opt/llama.cpp/build/bin
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p $GUNICORN_LOG
 cd /challenge
-gunicorn -b :80 --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
+gunicorn -b :80 -k eventlet --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
