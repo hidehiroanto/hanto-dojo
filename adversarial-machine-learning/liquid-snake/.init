@@ -7,7 +7,7 @@ MODEL_PATH=/opt/LiquidAI/LFM2-350M-GGUF/LFM2-350M-Q4_0.gguf
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
-$LLAMA_CPP_BIN_DIR/llama-server --port 1337 -m $MODEL_PATH -c 0 --temp 0 --top-k 0 --top-p 1.0 --min-p 0.0 &
+$LLAMA_CPP_BIN_DIR/llama-server --port 1337 -m $MODEL_PATH -c 0 -n 256 --temp 0 --top-k 0 --top-p 1.0 --min-p 0.0 &
 
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p $GUNICORN_LOG
