@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     betaOptOut.addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('Are you sure you want to opt-out of this beta? Doing so will reset your current session.')) {
-            sensaiSocket.emit('beta_opt_out');
+            modelSocket.emit('beta_opt_out');
             setTimeout(() => {
                 window.location.reload();
             }, 100);
