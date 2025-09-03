@@ -161,8 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modelSocket = io(url.origin, {
         path: `${url.pathname}socket.io`,
         transports: ["websocket"],
-        query: {session_id: sessionId},
-        timeout: 60000
+        query: {session_id: sessionId}
     });
     const promptStatus = document.querySelector("#prompt-status");
     const promptMessage = document.querySelector("#prompt-message");

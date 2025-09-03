@@ -12,4 +12,4 @@ $LLAMA_CPP_BIN_DIR/llama-server --port 1337 -m $MODEL_PATH -c 0 --temp 0 --top-k
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p $GUNICORN_LOG
 cd /challenge
-gunicorn -b :80 -k eventlet -t 60 --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
+gunicorn -b :80 -k eventlet -t 600 --access-logfile $GUNICORN_LOG/access.log --log-file $GUNICORN_LOG/error.log -D app:app
