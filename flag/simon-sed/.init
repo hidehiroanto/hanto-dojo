@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's/^pwn\.college{\([^\.}]*\).*}$/\1/' /flag
+chmod 444 /flag

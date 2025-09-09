@@ -5,6 +5,7 @@ award:
   emoji: 🐍
 modules:
   - id: lectures
+  - id: flag
   - id: pyjail
   - id: ssti
   - id: pickle

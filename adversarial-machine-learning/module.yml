@@ -48,3 +48,6 @@ challenges:
   - id: combine-core
     name: Combine Core
     image: hidehiroanto/challenge-ml:python3.11
+  - id: llama-drama
+    name: Llama Drama
+    image: hidehiroanto/challenge-ml:llama-drama
