@@ -10,3 +10,4 @@ modules:
   - id: ssti
   - id: pickle
   - id: adversarial-machine-learning
+  - id: misc

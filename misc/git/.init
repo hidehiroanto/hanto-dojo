@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cd /challenge
+git init
+git config --global user.email "pwn@pwn.college"
+git config --global user.name "root"
+cp /flag flag
+git add flag
+git commit -m "Add flag"
+rm flag
+git rm flag
+git commit -m "Remove flag"
+rm .init

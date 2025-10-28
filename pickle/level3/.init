@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PATH=/usr/bin
-
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 

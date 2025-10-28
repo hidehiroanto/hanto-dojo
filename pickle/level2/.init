@@ -1,11 +1,9 @@
 #!/bin/bash
 
-export PATH=/usr/bin
-
 find /challenge -type d -exec chmod 00755 {} \;
 find /challenge -type f -exec chmod 644 {} \;
 
 chmod 4755 /challenge/*.py
 
-mkdir /challenge/bin
+mkdir -p /challenge/bin
 gcc -o /challenge/bin/crackme /challenge/src/crackme.c

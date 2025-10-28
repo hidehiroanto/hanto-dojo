@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find /challenge -type f -exec chmod 644 {} \;
+chmod 4755 /challenge/run.py
