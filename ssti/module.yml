@@ -2,6 +2,9 @@ name: Server Side Template Injection
 challenges:
   - id: level1
     name: Out of Context
+    interfaces:
+      - name: Challenge
+        port: 80
   - id: level2
     name: I Dropped My Keys
   - id: level3

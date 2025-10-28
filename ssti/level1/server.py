@@ -1,11 +1,11 @@
-#!/usr/bin/exec-suid -- /usr/bin/python3 -I
+#!/usr/bin/env python3
 
 import flask
 import html
 import os
 
 app = flask.Flask(__name__)
-flag, port = (open('/flag').read().strip(), 80) if os.geteuid() == os.stat('/flag').st_uid else ('pwn.college{practice}', 1337)
+flag = open('/flag').read().strip()
 
 @app.route('/')
 def challenge_get():
@@ -54,5 +54,4 @@ def challenge_get():
     ''', flag=flag)
 
 app.secret_key = os.urandom(8)
-app.config['SERVER_NAME'] = f'localhost:{port}'
-app.run('localhost', port)
+app.run('0.0.0.0', 80)
