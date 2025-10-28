@@ -20,3 +20,8 @@ challenges:
     name: Attributes Are Fun!
   - id: level9
     name: Nesting Is Fun!
+  - id: impossibler
+    name: Impossibler
+  - id: yaml
+    name: Yet Another Minimal Loop
+    image: hidehiroanto/challenge:yaml
