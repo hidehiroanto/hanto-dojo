@@ -4,6 +4,6 @@ import yaml
 
 stream = input('> ')
 while stream:
-    if len(stream) < 21 and len(set(stream)) < 13:
+    if len(stream) < 21 and len(set(stream)) < 15:
         print(yaml.load(stream, yaml.Loader))
     stream = input('> ')

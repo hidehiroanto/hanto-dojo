@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:labs
 
-FROM python:alpine
+FROM python:slim
 
 RUN pip install --no-cache-dir pyyaml
 
