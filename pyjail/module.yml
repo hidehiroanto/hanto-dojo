@@ -22,6 +22,7 @@ challenges:
     name: Nesting Is Fun!
   - id: impossibler
     name: Impossibler
+    image: hidehiroanto/challenge:python-3.14
   - id: yaml
     name: Yet Another Minimal Loop
     image: hidehiroanto/challenge:yaml
