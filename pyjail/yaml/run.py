@@ -2,8 +2,11 @@
 
 import yaml
 
-stream = input('> ')
-while stream:
+stream = ''
+while stream != 'q':
+    stream = input('in: ')
     if len(stream) < 21 and len(set(stream)) < 15:
-        print(yaml.load(stream, yaml.Loader))
-    stream = input('> ')
+        try:
+            print(f'out: {yaml.load(stream, yaml.Loader)}')
+        except:
+            pass
