@@ -16,6 +16,11 @@ def challenge_get():
         <html lang=en>
             <head>
                 <title>Calculator</title>
+                <style>
+                    body {{
+                        background-color: white;
+                    }}
+                </style>
             </head>
             <body>
                 <h1>Calculator</h1>
