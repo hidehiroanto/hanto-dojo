@@ -43,15 +43,31 @@ html_400 = '''
 </html>
 '''
 
+html_500 = '''
+<!doctype html>
+<html>
+<head>
+    <title>500 Internal Server Error</title>
+</head>
+<body style="background-color: white">
+    <h1>Internal Server Error</h1>
+    <p>{{ error_message }}</p>
+</body>
+</html>
+'''
+
 @app.route('/')
 def challenge_get():
-    expression = flask.request.args.get('expression')
-    if not expression:
-        return flask.render_template_string(html_200, flag=flag)
-    escaped_expression = html.escape(expression).replace('{{', '').replace('}}', '').strip()
-    if len(escaped_expression) > 8:
-        return flask.render_template_string(html_400, error_message='Sorry, this application does not support evaluating expressions longer than 8 characters.'), 400
-    return flask.render_template_string(html_200.replace('result', escaped_expression), flag=flag, expression=escaped_expression)
+    try:
+        expression = flask.request.args.get('expression')
+        if not expression:
+            return flask.render_template_string(html_200, flag=flag)
+        escaped_expression = html.escape(expression).replace('{{', '').replace('}}', '').strip()
+        if len(escaped_expression) > 8:
+            return flask.render_template_string(html_400, error_message='Sorry, this application does not support evaluating expressions longer than 8 characters.'), 400
+        return flask.render_template_string(html_200.replace('result', escaped_expression), flag=flag, expression=escaped_expression)
+    except Exception as e:
+        return flask.render_template_string(html_500, error_message=str(e)), 500
 
 app.secret_key = os.urandom(8)
 app.run('0.0.0.0', 80)
