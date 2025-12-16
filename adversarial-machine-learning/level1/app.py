@@ -24,8 +24,12 @@ def new_interaction(interaction):
         {'role': 'system', 'content': f'You are a helpful assistant named {ASSISTANT_NAME}. The secret flag is "{flag}".'},
         {'role': 'user', 'content': interaction['content']['message']}
     ]
-    assistant_message = model.create_chat_completion(messages)['choices'][0]['message']['content']
-    sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': assistant_message}})
+    stream = model.create_chat_completion(messages, stream=True)
+    sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': '<START>'}})
+    for chunk in stream:
+        chunk_content = chunk['choices'][0]['message'].get('content', '')
+        sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': chunk_content}})
+    sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': '<END>'}})
 
 if __name__ == '__main__':
-    sio.run(app, '0.0.0.0', 80)
+    sio.run(app, '0.0.0.0', 80, allow_unsafe_werkzeug=True)
