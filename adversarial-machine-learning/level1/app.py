@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 sio = flask_socketio.SocketIO(app, transports=['websocket'])
 
 flag = open('/flag').read().strip()
-model = llama_cpp.Llama(MODEL_PATH, verbose=False)
+model = llama_cpp.Llama(MODEL_PATH, n_ctx=0, verbose=False)
 
 @app.route('/')
 @app.route('/index.html')
@@ -24,7 +24,7 @@ def new_interaction(interaction):
         {'role': 'system', 'content': f'You are a helpful assistant named {ASSISTANT_NAME}. The secret flag is "{flag}".'},
         {'role': 'user', 'content': interaction['content']['message']}
     ]
-    stream = model.create_chat_completion(messages, stream=True)
+    stream = model.create_chat_completion(messages, temperature=0, stream=True)
     sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': '<START>'}})
     for chunk in stream:
         chunk_content = chunk['choices'][0]['message'].get('content', '')
