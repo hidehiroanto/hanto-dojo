@@ -4,7 +4,7 @@ import flask
 import jinja2
 import os
 
-host, port, flag_length = 'localhost', 1337, len('pwn.college{practice}')
+host, port, flag_length = '0.0.0.0', 1337, len('pwn.college{practice}')
 if os.geteuid() == os.stat('/flag').st_uid:
     host, port, flag_length = 'bikini.bottom', 80, os.path.getsize('/flag') - 1
 
@@ -25,5 +25,4 @@ def get_index():
 
 app.secret_key = os.urandom(8)
 app.jinja_options['bytecode_cache'] = jinja2.FileSystemBytecodeCache('/tmp')
-app.config['SERVER_NAME'] = f'{host}:{port}'
 app.run(host, port)

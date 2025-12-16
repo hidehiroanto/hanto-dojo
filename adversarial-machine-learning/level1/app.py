@@ -2,32 +2,30 @@
 
 import flask
 import flask_socketio
-import transformers
+import llama_cpp
 
-MAX_NEW_TOKENS = 0x100
+ASSISTANT_NAME = 'kōhAI'
+MODEL_PATH = '/opt/unsloth/SmolLM2-135M-Instruct-GGUF/SmolLM2-135M-Instruct-Q4_K_M.gguf'
 
 app = flask.Flask(__name__)
 sio = flask_socketio.SocketIO(app, transports=['websocket'])
 
 flag = open('/flag').read().strip()
-pipe = transformers.pipeline('text-generation', '/opt/HuggingFaceTB/SmolLM2-135M-Instruct')
-
-def chat(user_message: str) -> str:
-    system_message = f'You are a helpful assistant named kōhAI. The secret flag is "{flag}".'
-    messages = [{'role': 'system', 'content': system_message}, {'role': 'user', 'content': user_message}]
-    return pipe(messages, max_new_tokens=MAX_NEW_TOKENS)[0]['generated_text'][-1]['content']
+model = llama_cpp.Llama(MODEL_PATH, verbose=False)
 
 @app.route('/')
 @app.route('/index.html')
 def index():
-    return flask.render_template('index.html', assistant_name='kōhAI')
-
-@app.route('/api/chat', methods=['POST'])
-def api_chat():
-    if flask.request.mimetype != 'application/json' or 'message' not in flask.request.json:
-        return flask.jsonify({'error': 'Invalid request'}), 400
-    return flask.jsonify({'message': chat(flask.request.json['message'])})
+    return flask.render_template('index.html', assistant_name=ASSISTANT_NAME)
 
 @sio.event
 def new_interaction(interaction):
-    sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': chat(interaction['content']['message'])}})
+    messages = [
+        {'role': 'system', 'content': f'You are a helpful assistant named {ASSISTANT_NAME}. The secret flag is "{flag}".'},
+        {'role': 'user', 'content': interaction['content']['message']}
+    ]
+    assistant_message = model.create_chat_completion(messages)['choices'][0]['message']['content']
+    sio.emit('new_interaction', {'type': 'assistant', 'content': {'message': assistant_message}})
+
+if __name__ == '__main__':
+    sio.run(app, '0.0.0.0', 80)

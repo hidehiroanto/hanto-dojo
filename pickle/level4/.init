@@ -1,8 +1,8 @@
 #!/bin/bash
 
-find /challenge -type d -exec chmod 00755 {} \;
-find /challenge -type f -exec chmod 644 {} \;
+find /challenge -type d -exec chmod 00755 {} +
+find /challenge -type f -exec chmod 644 {} +
 
 chmod 4755 /challenge/*.py
 
-echo -e '127.0.0.1\tbikini.bottom' >> /etc/hosts
+echo -e '0.0.0.0\tbikini.bottom' >> /etc/hosts
